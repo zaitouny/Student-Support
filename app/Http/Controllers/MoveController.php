@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-//ali
 
 use App\Models\Reference;
 use App\Models\Subject;
