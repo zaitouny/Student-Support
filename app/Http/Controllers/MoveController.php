@@ -184,11 +184,11 @@ class MoveController extends Controller
         // حفظ المواد في جدول البيفوت
         $student->subjects()->sync($selectedSubjects);
 
-        //return redirect()->route('success.page')->with('success', 'Subjects saved successfully.');
+        return redirect()->route('student.plan')->with('success', 'Subjects saved successfully.');
     }
 
     public function studentinformation(){
-        return view("s");
+        return view("studentinformation");
     }
 
     public function quiz(){
