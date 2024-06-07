@@ -9,6 +9,13 @@ class Quiz extends Model
 {
     use HasFactory;
 
+    protected $fillable=[
+        'date',
+        'time',
+        'period',
+        'subject_id',
+    ];
+
     public function subject()
     {
         return $this->belongsTo(Subject::class);

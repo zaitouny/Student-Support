@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Homework extends Model
 {
     use HasFactory;
+
+    protected $fillable=[
+        'link',
+        'kind',
+        'subject_id',
+    ];
 }

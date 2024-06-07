@@ -9,6 +9,12 @@ class Reference extends Model
 {
     use HasFactory;
 
+    protected $fillable=[
+        'link',
+        'kind',
+        'subject_id',
+    ];
+
     public function subject()
     {
         return $this->belongsTo(Subject::class);
