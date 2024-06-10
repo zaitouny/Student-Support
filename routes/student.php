@@ -41,6 +41,8 @@ Route::name('student.')->group(function () {
     Route::get('save-subjects',[MoveController::class,'saveSubjects'])->name('savesubjects');
     Route::get('quiz',[MoveController::class,'quiz'])->name('quiz');
     Route::get('homework',[MoveController::class,'homework'])->name('homework');
+    Route::get('studentinformation',[MoveController::class,'studentinformation'])->name('studentinformation');
+
     
 });
 

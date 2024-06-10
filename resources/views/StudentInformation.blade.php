@@ -1,56 +1,135 @@
-@foreach($subjects as $subject)
-            <div class="col-lg-2 col-md-4 col-sm-6 ">
-                <div class="service-item text-center pt-3">
-                    <div class="p-4" >
-                        <i class="fa fa-3x fa-graduation-cap text-primary mb-4"></i>
-                        <h5 class="mb-3">{{ $subject->name }}</h5>
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#referenceModal{{$subject->id}}">Associated subject<
-                        @php
-                            $allPrerequisitesCompleted = true; // افتراضيا، نفترض أن جميع المتطلبات السابقة قد اكتملت
-                        @endphp
-                        
-                    </div>  
-                </div>
-            
-                <!-- Modal -->
-                <div class="modal fade" id="referenceModal{{$subject->id}}" tabindex="-1" aria-labelledby="referenceModal{{$subject->id}}Label" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="referenceModal{{$subject->id}}Label">Associated for {{ $subject->name }}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div>
-                                    <h6>Prerequisites:</h6>
-                                    @if($subject->prerequisites->isNotEmpty())
-                                        <ul>
-                                            @foreach($subject->prerequisites as $prerequisite)
-                                                <li>{{ $prerequisite->name }}</li>
-                                            @endforeach
-                                        </ul>
-                                    @else
-                                        <span>No prerequisites</span>
-                                    @endif
-                                </div>
-                                <div>
-                                    <h6>Dependents:</h6>
-                                    @if($subject->dependents->isNotEmpty())
-                                        <ul>
-                                            @foreach($subject->dependents as $dependent)
-                                                <li>{{ $dependent->name }}</li>
-                                            @endforeach
-                                        </ul>
-                                    @else
-                                        <span>No dependents</span>
-                                    @endif
-                                </div>
-                            </div>  
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            display: flex;
+            width: 80%;
+        }
+
+        .cards {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            width: 60%;
+        }
+
+        .card {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            flex: 1;
+            transition: background-color 0.3s;
+        }
+
+        .card:hover {
+            background-color: #f0f0f0;
+        }
+
+        .details {
+            display: none;
+            flex: 1;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+        }
+
+        .active {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .details.active {
+            display: block;
+            width: 40%;
+        }
+
+        .alert {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .alert button {
+            margin-top: 10px;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="cards">
+            <div class="card" data-details="Details for Card 1">
+                <h3>Card 1</h3>
             </div>
-        @endforeach
+            <div class="card" data-details="Details for Card 2">
+                <h3>Card 2</h3>
+            </div>
+            <div class="card" data-details="Details for Card 3">
+                <h3>Card 3</h3>
+            </div>
+        </div>
+        <div class="details">
+            <p>Select a card to see details here.</p>
+        </div>
+    </div>
+
+    <div class="alert" id="alert-box">
+        <p id="alert-message"></p>
+        <button onclick="closeAlert()">OK</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const cards = document.querySelectorAll('.card');
+            const detailsContainer = document.querySelector('.details');
+            const container = document.querySelector('.container');
+            const alertBox = document.getElementById('alert-box');
+            const alertMessage = document.getElementById('alert-message');
+
+            cards.forEach(card => {
+                card.addEventListener('click', function () {
+                    const details = this.getAttribute('data-details');
+                    detailsContainer.innerHTML = `<p>${details}</p>`;
+                    container.classList.add('active');
+                });
+            });
+        });
+
+        function showAlert(message) {
+            const alertBox = document.getElementById('alert-box');
+            const alertMessage = document.getElementById('alert-message');
+            alertMessage.textContent = message;
+            alertBox.style.display = 'block';
+        }
+
+        function closeAlert() {
+            const alertBox = document.getElementById('alert-box');
+            alertBox.style.display = 'none';
+        }
+    </script>
+</body>
+</html>

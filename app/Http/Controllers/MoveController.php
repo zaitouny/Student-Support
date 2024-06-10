@@ -174,15 +174,30 @@ class MoveController extends Controller
             return redirect()->back()->with('error', 'No subjects selected.');
         }
 
-        // الحصول على الطالب
         $student = Student::find($studentId);
 
         if (!$student) {
             return redirect()->back()->with('error', 'Student not found.');
         }
 
-        // حفظ المواد في جدول البيفوت
-        $student->subjects()->sync($selectedSubjects);
+        foreach ($selectedSubjects as $subjectId) {
+
+            $existingSubject = $student->subjects()->find($subjectId);
+        
+            if ($existingSubject && $existingSubject->pivot->status === 0) {
+            
+                $existingSubject->pivot->how_often += 1;
+                $existingSubject->pivot->save();
+                $student->subjects()->updateExistingPivot($subjectId, ['status' => 2]);
+            
+            }else {
+            
+                $student->subjects()->attach($subjectId, [
+                    'status' => 2,
+                    'how_often' => 1,
+                ]);
+            }
+        }
 
         return redirect()->route('student.plan')->with('success', 'Subjects saved successfully.');
     }

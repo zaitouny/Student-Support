@@ -19,6 +19,8 @@ return new class extends Migration
             ////1 اي ان المادة ناجحة
             ////2 اي ان المادة جاري تقديمها
             $table->integer('status')->default('2');
+            $table->integer('how_often')->default('1');
+            $table->integer('mark')->nullable();
             $table->timestamps();
         });
     }

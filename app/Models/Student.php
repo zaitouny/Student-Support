@@ -14,7 +14,14 @@ class Student extends Authenticatable
 
     public function subjects()
     {
-        return $this->belongsToMany(Subject::class)->withPivot('status');
+        return $this->belongsToMany(Subject::class)->withPivot('status','how_often','mark');
+    }
+
+    public function SubjectsForThisSemester()
+    {
+        return $this->belongsToMany(Subject::class)
+                    ->withPivot('status')
+                    ->wherePivot('status', 2);
     }
 
     /**
