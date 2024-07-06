@@ -1,30 +1,21 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Resources\SubjectResource\RelationManagers;
 
-use App\Filament\Resources\SubjectResource\Pages;
-use App\Filament\Resources\SubjectResource\RelationManagers;
-use App\Filament\Resources\SubjectResource\RelationManagers\DependentsRelationManager;
-use App\Filament\Resources\SubjectResource\RelationManagers\HomeworkRelationManager;
-use App\Filament\Resources\SubjectResource\RelationManagers\PrerequisitesRelationManager;
-use App\Filament\Resources\SubjectResource\RelationManagers\QuizzesRelationManager;
-use App\Filament\Resources\SubjectResource\RelationManagers\ReferencesRelationManager;
-use App\Models\Subject;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Models\Subject;
 
-class SubjectResource extends Resource
+class PrerequisitesRelationManager extends RelationManager
 {
-    protected static ?string $model = Subject::class;
+    protected static string $relationship = 'prerequisites';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
-    public static function form(Form $form): Form
+    public function form(Form $form): Form
     {
         return $form
             ->schema([
@@ -59,10 +50,13 @@ class SubjectResource extends Resource
             ]);
     }
 
-    public static function table(Table $table): Table
+    public function table(Table $table): Table
     {
         return $table
+            ->recordTitleAttribute('id')
             ->columns([
+                Tables\Columns\TextColumn::make('id')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('year')
@@ -74,47 +68,35 @@ class SubjectResource extends Resource
                 Tables\Columns\TextColumn::make('hours')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
             ])
+            ->headerActions([
+                Tables\Actions\CreateAction::make(),
+                Tables\Actions\AttachAction::make()
+                    ->form(fn (array $data) => [
+                        Forms\Components\Select::make('subject_id')
+                            ->label('Select Subject')
+                            ->options(Subject::all()->pluck('name', 'id')->toArray())
+                            ->searchable()
+                            ->getSearchResultsUsing(fn (string $query) => Subject::where('name', 'like', "%{$query}%")->pluck('name', 'id'))
+                            ->required(),
+                    ])
+                    ->action(function (array $data) {
+                        $this->ownerRecord->prerequisites()->attach($data['subject_id']);
+                    }),
+            ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DetachAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DetachBulkAction::make(),
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            ReferencesRelationManager::class,
-            PrerequisitesRelationManager::class,
-            DependentsRelationManager::class,
-            QuizzesRelationManager::class,
-            HomeworkRelationManager::class,
-        ];
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListSubjects::route('/'),
-            'create' => Pages\CreateSubject::route('/create'),
-            'view' => Pages\ViewSubject::route('/{record}'),
-            'edit' => Pages\EditSubject::route('/{record}/edit'),
-        ];
     }
 }

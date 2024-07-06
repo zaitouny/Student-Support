@@ -2,10 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ReferenceResource\Pages;
-use App\Filament\Resources\ReferenceResource\RelationManagers;
-use App\Models\Reference;
-use App\Models\Subject;
+use App\Filament\Resources\HomeworkResource\Pages;
+use App\Filament\Resources\HomeworkResource\RelationManagers;
+use App\Models\Homework;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,10 +12,11 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Models\Subject;
 
-class ReferenceResource extends Resource
+class HomeworkResource extends Resource
 {
-    protected static ?string $model = Reference::class;
+    protected static ?string $model = Homework::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -27,20 +27,15 @@ class ReferenceResource extends Resource
                 Forms\Components\Select::make('subject_id')
                     ->options(Subject::pluck('name', 'id')->toArray()) 
                     ->required(),
-                Forms\Components\TextInput::make('link')
-                    ->label('Link')
+                Forms\Components\DatePicker::make('last_date'),
+                Forms\Components\TextInput::make('supporting_link')
+                    ->label('Supporting Link')
                     ->required()
                     ->maxLength(255)
                     ->rule('url')
                     ->placeholder('Enter a valid URL'),
-                Forms\Components\Select::make('kind')
-                    ->options([
-                        'Video' => 'Video',
-                        'Article' => 'Article',
-                        'Podcast' => 'Podcast',
-                        'Book' => 'Book',
-                    ])
-                    ->required(),
+                Forms\Components\Textarea::make('description')
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -49,17 +44,20 @@ class ReferenceResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('subject.name')
-                    ->label('Subject')
-                    ->sortable()
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('link')
-                    ->label('Link')
-                    ->url(fn ($record) => $record->link)
+                ->label('Subject')
+                ->sortable()
+                ->searchable(),
+                Tables\Columns\TextColumn::make('last_date')
+                    ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('supporting_link')
+                    ->label('Supporting Link')
+                    ->url(fn ($record) => $record->supporting_link)
                     ->openUrlInNewTab()
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('kind')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('description')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -93,10 +91,10 @@ class ReferenceResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListReferences::route('/'),
-            'create' => Pages\CreateReference::route('/create'),
-            'view' => Pages\ViewReference::route('/{record}'),
-            'edit' => Pages\EditReference::route('/{record}/edit'),
+            'index' => Pages\ListHomework::route('/'),
+            'create' => Pages\CreateHomework::route('/create'),
+            'view' => Pages\ViewHomework::route('/{record}'),
+            'edit' => Pages\EditHomework::route('/{record}/edit'),
         ];
     }
 }

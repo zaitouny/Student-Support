@@ -4,6 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\StudentResource\Pages;
 use App\Filament\Resources\StudentResource\RelationManagers;
+use App\Filament\Resources\StudentResource\RelationManagers\SubjectRelationManager;
+use App\Filament\Resources\StudentResource\RelationManagers\SubjectsForThisSemesterRelationManager;
 use App\Models\Student;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -90,7 +92,8 @@ class StudentResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            SubjectRelationManager::class,
+            SubjectsForThisSemesterRelationManager::class,
         ];
     }
 

@@ -24,7 +24,6 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -46,6 +45,7 @@
             max-width: 800px;
             margin: 50px auto;
             padding: 20px;
+            
         }
 
         #specific-div2 {
@@ -98,11 +98,6 @@
             margin: 0;
             color: #333;
         }
-
-        .form-container {
-            display: none;
-            margin-top: 20px;
-        }
     </style>
 </head>
 
@@ -119,18 +114,30 @@
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
         <a href="{{route('student.index')}}" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-            <h2 class="m-0 text-primary" style="font-family: 'Dubai Medium'"><i class="fa fa-book me-3"></i>Student Support</h2>
+            <h2 class="m-0 text-primary"  style="font-family: 'Dubai Medium'"><i class="fa fa-book me-3" ></i>Student Support</h2>
         </a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="{{route('student.index')}}" class="nav-item nav-link" style="font-family: 'Dubai Medium'">Home</a>
-                <a href="{{route('student.edu')}}" class="nav-item nav-link" style="font-family: 'Dubai Medium'">Educational resources</a>
+                <a href="{{route('student.index')}}" class="nav-item nav-link  " style="font-family: 'Dubai Medium'">Home</a>
+                <!--<a href="{{route('student.about')}}" class="nav-item nav-link" style="font-family: 'Dubai Medium'">حول</a>-->
+                <a href="{{route('student.edu')}}" class="nav-item nav-link " style="font-family: 'Dubai Medium'">Educational resources</a>
                 <a href="{{route('student.plan')}}" class="nav-item nav-link" style="font-family: 'Dubai Medium'">Study plan</a>
                 <a href="{{route('student.homework')}}" class="nav-item nav-link" style="font-family: 'Dubai Medium'">Homework</a>
-                <a href="{{route('student.quiz')}}" class="nav-item nav-link" style="font-family: 'Dubai Medium'">Quiz</a>
+                <a href="{{route('student.quiz')}}" class="nav-item nav-link " style="font-family: 'Dubai Medium'">Quiz</a>
+
+
+                {{-- <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="font-family: 'Dubai Medium'">صفحات</a>
+                    <div class="dropdown-menu fade-down m-0">
+                        <a href="{{route('student.team')}}" class="dropdown-item">Our Team</a>
+                        <a href="{{route('student.testimonial')}}" class="dropdown-item">Testimonial</a>
+                        <a href="{{route('student.404')}}" class="dropdown-item">404 Page</a>
+                    </div>
+                </div>
+                <a href="{{route('student.contact')}}" class="nav-item nav-link" style="font-family: 'Dubai Medium'">تواصل</a> --}}
             </div>
             <div class="col-lg-4 text-right container" dir="rtl">
 
@@ -146,11 +153,11 @@
                         @csrf
                     </form>
                 @else
-                    <a href="{{ route('student.login') }}" class=" " style="font-family: 'Dubai Medium'">
+                    <a href="{{ route('student.login') }}" class=" " style="font-family: 'Dubai Medium'" >
                         Login
                     </a>
                     |
-                    <a href="{{ route('student.register') }}" class="" style="font-family: 'Dubai Medium'">
+                    <a href="{{ route('student.register') }}" class="" style="font-family: 'Dubai Medium'" >
                         <span class="icon-users" style=""><i class="bi bi-r-square"></i></span> Register
                     </a>
                 @endif
@@ -158,61 +165,37 @@
         </div>
     </nav>
     <!-- Navbar End -->
+    
+    <h1  id="specific-div1">Profile Edit</h1>
 
-    <h1 id="specific-div1">Profile</h1>
+    <div id="specific-div">
+        <form action="{{ route('student.profile.update') }}" method="POST">
+            @csrf
+            @method('PUT')
 
-    <div class="container" id="specific-div">
-        <h3>Personal information</h3>
-        <div class="profile-info">
-            <p><strong>Name:</strong> {{ Auth::user()->name }}</p>
-            <p><strong>Email:</strong> {{ Auth::user()->email }}</p>
-            <p><strong>University ID:</strong> {{ Auth::user()->uni_id }}</p>
-            <p><strong>Year:</strong> {{ Auth::user()->year }}</p>
-            <p><strong>Passed Credits:</strong> {{ Auth::user()->year }}</p>
-            <p><strong>AGPA:</strong> {{ Auth::user()->year }} Pts</p>
-        </div>
-        <button class="btn" id="edit-profile-btn" style="background-color: #79b7e7">Edit Profile</button>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $student->name) }}" required>
+            </div>
 
-        <div class="form-container" id="edit-profile-form">
-            <form action="{{ route('student.profile.update') }}" method="POST">
-                @csrf
-                @method('PATCH')
-                
-                <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" name="name" id="name" class="form-control" value="{{ Auth::user()->name }}">
-                </div>
-                <br>
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" name="email" id="email" class="form-control" value="{{ Auth::user()->email }}">
-                    @if ($errors->has('email'))
-                        <span class="text-danger">{{ $errors->first('email') }}</span>
-                    @endif
-                </div>
-                <br>
-                <div class="form-group">
-                    <label for="uni_id">University ID:</label>
-                    <input type="text" name="uni_id" id="uni_id" class="form-control" value="{{ Auth::user()->uni_id }}">
-                </div>
-                <br>
-                {{-- <div class="form-group">
-                    <label for="year">Year:</label>
-                    <select name="year" id="year" class="form-control">
-                        <option value="First Year" {{ Auth::user()->year == 'First Year' ? 'selected' : '' }}>First Year</option>
-                        <option value="Second Year" {{ Auth::user()->year == 'Second Year' ? 'selected' : '' }}>Second Year</option>
-                        <option value="Second Year" {{ Auth::user()->year == 'Second Year' ? 'selected' : '' }}>Second Year</option>
-                        <option value="Second Year" {{ Auth::user()->year == 'Second Year' ? 'selected' : '' }}>Second Year</option>
-                        <option value="Second Year" {{ Auth::user()->year == 'Second Year' ? 'selected' : '' }}>Second Year</option>
-                    </select>
-                </div>
-                <br> --}}
-                <p style="color: #f90000">If there is an error in entering the average, number of hours, or academic year, please contact support for modification.</p>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" class="form-control" value="{{ old('email', $student->email) }}" required>
+            </div>
 
-                <button type="submit" class="btn">Save Changes</button>
-            </form>
-        </div>
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" name="phone" id="phone" class="form-control" value="{{ old('phone', $student->phone) }}">
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+        </form>
     </div>
+
+    {{-- <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a> --}}
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -224,26 +207,6 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-    <script>
-        document.getElementById('edit-profile-btn').addEventListener('click', function() {
-            var formContainer = document.getElementById('edit-profile-form');
-            if (formContainer.style.display === 'none' || formContainer.style.display === '') {
-                formContainer.style.display = 'block';
-            } else {
-                formContainer.style.display = 'none';
-            }
-        });
-
-        @if(session('success'))
-            toastr.success("{{ session('success') }}");
-        @endif
-
-        @if(session('error'))
-            toastr.error("{{ session('error') }}");
-        @endif
-    </script>
 </body>
 
 </html>

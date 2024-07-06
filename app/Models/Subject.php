@@ -12,6 +12,11 @@ class Subject extends Model
         return $this->hasMany(Reference::class,'subject_id');
     }
 
+    public function subjects()
+    {
+        return $this->hasMany(Subject::class,'id');
+    }
+
     public function students()
     {
         return $this->belongsToMany(Student::class)->withPivot('status');
@@ -32,6 +37,11 @@ class Subject extends Model
     public function quizzes()
     {
         return $this->hasMany(Quiz::class);
+    }
+
+    public function homework()
+    {
+        return $this->hasMany(Homework::class);
     }
 
     

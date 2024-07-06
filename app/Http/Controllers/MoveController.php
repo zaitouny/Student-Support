@@ -212,7 +212,6 @@ class MoveController extends Controller
 
             $studentId = Auth::guard('student')->id();        
             
-            // Get the student with subjects and quizzes where pivot status is 2
             $student = Student::with(['subjects' => function($query) {
                 $query->wherePivot('status', '2');
             }, 'subjects.quizzes'])->find($studentId);
@@ -228,7 +227,20 @@ class MoveController extends Controller
 
     public function homework()
     {
-        return view('homework');
+        if(Auth::guard('student')->check()){
+
+            $studentId = Auth::guard('student')->id();        
+            
+            $student = Student::with(['subjects' => function($query) {
+                $query->whereHas('homework');
+            }, 'subjects.homework'])->findOrFail($studentId);
+
+            return view('homework', compact('student'));
+        }
+        else {
+            return redirect('login');
+        }
+        
     }
 
 

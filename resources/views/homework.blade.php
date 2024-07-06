@@ -91,22 +91,74 @@
     </nav>
     <!-- Navbar End -->
     
-    @if(auth('student')->check() )
-        
-        <br>
-        <div class="container-fluid bg-light py-2 text-center">
-            <h4>References For Your Subjects</h4>
+    <section id="menu" class="menu section-bg">
+        <div class="container" data-aos="fade-up">
+            @if($student->subjects->isNotEmpty())
+                <br>
+                <div class="container-fluid bg-light py-2 text-center">
+                    <h4>Homework For Your Subjects</h4>
+                </div>
+                <br>
+    
+                <div class="row menu" data-aos="fade-up" data-aos-delay="200">
+                    @foreach($student->subjects as $subject)
+                        <div class="col-lg-2 col-md-4 col-sm-6">
+                            <div class="menu-item">
+                                <div class="service-item text-center pt-3" style="width: 200px; height: 250px; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                    <div class="p-4">
+                                        <i class="fa fa-3x fa-graduation-cap text-primary mb-4"></i>
+                                        <h5 class="mb-3">{{ $subject->name }}</h5>
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#referenceModal{{$subject->id}}">View Homeworks</a>
+                                    </div>
+                                </div>
+    
+                                <!-- Modal -->
+                                <div class="modal fade" id="referenceModal{{$subject->id}}" tabindex="-1" aria-labelledby="referenceModal{{$subject->id}}Label" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="referenceModal{{$subject->id}}Label">{{ $subject->name }}</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div>
+                                                    <h6>Homeworks:</h6>
+                                                    @if($subject->homework->isNotEmpty())
+                                                        <ul>
+                                                            @foreach($subject->homework as $homework)
+                                                                <li>
+                                                                    <strong>{{ $homework->description }}</strong><br>
+                                                                    Last date: {{ $homework->last_date }}<br>
+                                                                    <a href="{{ $homework->supporting_link }}" target="_blank">Supporting Link</a>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    @else
+                                                        <span>No homeworks</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <br>
+                <div class="container-fluid bg-light py-4 text-center">
+                    <h4 class="text-danger">No Homeworks For Your Subjects</h4>
+                    <p class="text-muted">You currently do not have any homework assigned for your subjects.</p>
+                </div>
+                <br>
+            @endif
         </div>
-        <br>
-
-
-    @endif
-
-    <br>
-    <div class="container-fluid bg-light py-2 text-center">
-        <h4>Filter By Years</h4>
-    </div>
-    <br>
+    </section>
+    
 
     <!-- ======= Filter Section ======= -->
     

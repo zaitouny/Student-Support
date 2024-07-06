@@ -1,45 +1,40 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Resources\SubjectResource\RelationManagers;
 
-use App\Filament\Resources\QuizResource\Pages;
-use App\Filament\Resources\QuizResource\RelationManagers;
-use App\Models\Quiz;
-use App\Models\Subject;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class QuizResource extends Resource
+class QuizzesRelationManager extends RelationManager
 {
-    protected static ?string $model = Quiz::class;
+    protected static string $relationship = 'quizzes';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
-    public static function form(Form $form): Form
+    public function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('subject_id')
-                    ->options(Subject::pluck('name', 'id')->toArray()) 
-                    ->required(),
+                Forms\Components\Hidden::make('subject_id')
+                    ->default(fn ($livewire) => $livewire->ownerRecord->id),
                 Forms\Components\DatePicker::make('date')
                     ->required(),
                 Forms\Components\TimePicker::make('time')
                     ->required(),
                 Forms\Components\TextInput::make('period')
+                    ->label('Period')
                     ->required()
-                    ->maxLength(255),
+                    ->extraAttributes(['placeholder' => 'HH:MM']),
             ]);
     }
 
-    public static function table(Table $table): Table
+    public function table(Table $table): Table
     {
         return $table
+            ->recordTitleAttribute('subject_id')
             ->columns([
                 Tables\Columns\TextColumn::make('subject.name')
                 ->label('Subject')
@@ -63,31 +58,17 @@ class QuizResource extends Resource
             ->filters([
                 //
             ])
+            ->headerActions([
+                Tables\Actions\CreateAction::make(),
+            ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListQuizzes::route('/'),
-            'create' => Pages\CreateQuiz::route('/create'),
-            'view' => Pages\ViewQuiz::route('/{record}'),
-            'edit' => Pages\EditQuiz::route('/{record}/edit'),
-        ];
     }
 }

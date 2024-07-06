@@ -9,9 +9,15 @@ class Homework extends Model
 {
     use HasFactory;
 
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
+    }
+
     protected $fillable=[
-        'link',
-        'kind',
+        'last_date',
+        'description',
         'subject_id',
+        'supporting_link',
     ];
 }

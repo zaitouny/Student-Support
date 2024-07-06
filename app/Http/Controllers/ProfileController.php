@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Subject;
+use App\Models\Student;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,28 +18,65 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-        $subject=Subject::all();
+        $studentId = Auth::guard('student')->id();
+        $semesterSubjects = Student::with(['subjects' => function($query) {
+            $query->wherePivot('status', '2');
+        }])->find($studentId);
       
+        if (!$semesterSubjects || $semesterSubjects->subjects->isEmpty()) {
+            return view('profile', [
+                'user' => $request->user(),
+                'semesterSubjects' => collect(), // إرجاع مجموعة فارغة
+            ]);
+        }
+    
         return view('profile', [
             'user' => $request->user(),
-            'subject' => $subject,
+            'semesterSubjects' => $semesterSubjects->subjects,
         ]);
     }
+
+
+    public function editProfile(Request $request): View
+    {
+        $studentId = Auth::guard('student')->id();
+        $student = Student::find($studentId);
+
+        return view('profile_edit', [
+            'student' => $student,
+        ]);
+    }
+
 
     /**
      * Update the user's profile information.
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $data = $request->validated();
+        
+        $user = $request->user();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if ($user->email !== $data['email']) {
+            $existingUser = Student::where('email', $data['email'])->first();
+
+            if ($existingUser) {
+                return Redirect::route('student.profile.edit')
+                ->withErrors(['email' => 'Email has already been taken.'])
+                ->with('error', 'Email has already been taken.')
+                ->withInput();
+            }
+
+            $user->email_verified_at = null;
         }
 
-        $request->user()->save();
+        $user->fill($data);
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        $user->save();
+
+        return Redirect::route('student.profile.edit')
+        ->with('status', 'profile-updated')
+        ->with('success', 'The profile has been updated successfully.');
     }
 
     /**

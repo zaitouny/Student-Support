@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('homework', function (Blueprint $table) {
+        Schema::create('assistants', function (Blueprint $table) {
             $table->id();
-            $table->date('last_date')->nullable();
-            $table->longText('description')->nullable()->default('text');
-            $table->string('supporting_link')->nullable();
-            $table->foreignId('subject_id')->references('id')->on('subjects')->onDelete('cascade');
+            $table->string('key');
+            $table->string('value');
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('homework');
+        Schema::dropIfExists('assistants');
     }
 };

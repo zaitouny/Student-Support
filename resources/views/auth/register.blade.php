@@ -131,7 +131,7 @@
                 });
                 </script>
 
-            <!-- Year -->
+            {{-- <!-- Year -->
             <div class="input-group">
                 <label for="year" style="text-align: left;">Year</label>
                 <select id="year" name="year"  required autofocus>
@@ -141,7 +141,7 @@
                     <option value="Fourth year" {{ old('year') == 'Fourth Year' ? 'selected' : '' }}>Fourth year</option>
                     <option value="Fifth year" {{ old('year') == 'Fifth Year' ? 'selected' : '' }}>Fifth year</option>
                 </select>
-            </div>
+            </div> --}}
 
 
             <!-- Email Address -->
