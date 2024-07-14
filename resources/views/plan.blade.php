@@ -112,6 +112,29 @@
             margin-top: 10px;
             padding: 5px 10px;
         }
+
+        .btn-center {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            background-color: rgb(10, 190, 220);
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            margin: 0 auto;
+            display: block; 
+            width: fit-content; 
+        }
+
+        .btn-center:hover {
+            background-color: #0056b3;
+        }
+
+        .center-container {
+            text-align: center; 
+        }
         
     </style>
 </head>
@@ -211,12 +234,13 @@
                     @foreach($studentSubjects as $subject)
                         <div class="col-lg-2 col-md-4 col-sm-6 ">
                             <div class="menu-item ">
-                                <div class="service-item text-center pt-3" style="width: 200px; height: 250px; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                <div class="service-item text-center pt-3" style="width: 200px; height: 260px; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                                     <div class="p-4">
                                         <i class="fa fa-3x fa-graduation-cap text-primary mb-4"></i>
                                         <h5 class="mb-3">{{ $subject->name }}</h5>
                                         <h6 class="mb-2">Hours : {{ $subject->hours }}</h6>
                                         <a href="#" data-bs-toggle="modal" data-bs-target="#referenceModal{{$subject->id}}">More Informations</a>
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#descriptionModal{{$subject->id}}">Description subject</a>
                                     </div>
                                 </div>
 
@@ -229,6 +253,14 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
+                                                <div>
+                                                    <h6>Year:</h6>
+                                                    {{$subject->year}}
+                                                </div>
+                                                <div>
+                                                    <h6>Semester:</h6>
+                                                    {{$subject->term}}
+                                                </div>
                                                 <div>
                                                     <h6>Prerequisites:</h6>
                                                     @if($subject->prerequisites->isNotEmpty())
@@ -260,12 +292,45 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <!-- Description Modal -->
+                                <div class="modal fade" id="descriptionModal{{$subject->id}}" tabindex="-1" aria-labelledby="descriptionModal{{$subject->id}}Label" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="descriptionModal{{$subject->id}}Label">Description for {{ $subject->name }}</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div>
+                                                    <h6>Description:</h6>
+                                                    @if($subject->description)
+                                                        <ul>
+                                                            {{$subject->description}}
+                                                        </ul>
+                                                    @else
+                                                        <span>No description</span>
+                                                    @endif
+                                                </div>
+                                            </div>  
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     @endforeach
                 </div>
             </div>   
         </section>
+        <br>
+
+        <div class="center-container">
+            <a href="{{ route('student.subjects.status') }}" class="btn-center">End Semester</a>
+        </div>
+        
 
     @else 
         <br>
@@ -312,13 +377,14 @@
                            
                             <div class="col-lg-2 col-md-4 col-sm-6 ">
                                 <div class="menu-item filter-{{$subject->year}}">
-                                    <div class="service-item text-center pt-3" style="width: 200px; height: 280px; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                    <div class="service-item text-center pt-3" style="width: 200px; height: 350px; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                                         <div class="p-4" >
                                             <i class="fa fa-3x fa-graduation-cap text-primary mb-4"></i>
                                             <h5 class="mb-3">{{ $subject->name }}</h5>
                                             <h6 class="mb-2" style="font-size: 90%">Hours : {{ $subject->hours }}</h6>
                                             <h6 class="mb-2" style="font-size: 90%">First semester</h6>
                                             <a href="#" data-bs-toggle="modal" data-bs-target="#referenceModal{{$subject->id}}">Associated subject</a>
+                                            <a href="#" data-bs-toggle="modal" data-bs-target="#descriptionModal{{$subject->id}}">Description subject</a>
 
                                             @php
                                                 $allPrerequisitesCompleted = true; 
@@ -417,6 +483,33 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <!-- Description Modal -->
+                                    <div class="modal fade" id="descriptionModal{{$subject->id}}" tabindex="-1" aria-labelledby="descriptionModal{{$subject->id}}Label" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="descriptionModal{{$subject->id}}Label">Description for {{ $subject->name }}</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div>
+                                                        <h6>Description:</h6>
+                                                        @if($subject->description)
+                                                            <ul>
+                                                                {{$subject->description}}
+                                                            </ul>
+                                                        @else
+                                                            <span>No description</span>
+                                                        @endif
+                                                    </div>
+                                                </div>  
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         @endforeach
@@ -430,13 +523,14 @@
                            
                             <div class="col-lg-2 col-md-4 col-sm-6 ">
                                 <div class="menu-item filter-{{$subject->year}}">
-                                    <div class="service-item text-center pt-3" style="width: 200px; height: 280px; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                    <div class="service-item text-center pt-3" style="width: 200px; height: 350px; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                                         <div class="p-4" >
                                             <i class="fa fa-3x fa-graduation-cap text-primary mb-4"></i>
                                             <h5 class="mb-3">{{ $subject->name }}</h5>
                                             <h6 class="mb-2" style="font-size: 90%">Hours : {{ $subject->hours }}</h6>
                                             <h6 class="mb-2" style="font-size: 90%">Second semester</h6>
                                             <a href="#" data-bs-toggle="modal" data-bs-target="#referenceModal{{$subject->id}}">Associated subject</a>
+                                            <a href="#" data-bs-toggle="modal" data-bs-target="#descriptionModal{{$subject->id}}">Description subject</a>
 
                                             @php
                                                 $allPrerequisitesCompleted = true; // افتراضيا، نفترض أن جميع المتطلبات السابقة قد اكتملت
@@ -535,6 +629,33 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <!-- Description Modal -->
+                                    <div class="modal fade" id="descriptionModal{{$subject->id}}" tabindex="-1" aria-labelledby="descriptionModal{{$subject->id}}Label" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="descriptionModal{{$subject->id}}Label">Description for {{ $subject->name }}</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div>
+                                                        <h6>Description:</h6>
+                                                        @if($subject->description)
+                                                            <ul>
+                                                                {{$subject->description}}
+                                                            </ul>
+                                                        @else
+                                                            <span>No description</span>
+                                                        @endif
+                                                    </div>
+                                                </div>  
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         @endforeach
@@ -545,54 +666,69 @@
 
             <!-- Submit Button -->
             <div class="container text-center mt-4">
-                <button type="submit" class="btn btn-primary">Complete</button>
+                <button type="submit" class="btn btn-primary" >Complete</button>
             </div>
         </form>
     @endif
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const checkboxes = document.querySelectorAll('input[name="subjects[]"]');
-            const totalHoursContainer = document.getElementById('total-hours');
-            const alertBox = document.getElementById('alert-box');
-            const alertMessage = document.getElementById('alert-message');
-            const overlay = document.getElementById('overlay');
-            const closeAlertButton = document.getElementById('close-alert');
-            let totalHours = 0;
-            const maxHours = 18;
+<!-- زر السبميت -->
 
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', function () {
-                    const hours = parseInt(this.closest('.service-item').querySelector('.subject-hours').value);
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const checkboxes = document.querySelectorAll('input[name="subjects[]"]');
+        const totalHoursContainer = document.getElementById('total-hours');
+        const alertBox = document.getElementById('alert-box');
+        const alertMessage = document.getElementById('alert-message');
+        const overlay = document.getElementById('overlay');
+        const closeAlertButton = document.getElementById('close-alert');
+        const submitButton = document.querySelector('form button[type="submit"]');
+        let totalHours = 0;
+        const minHours = 12; // Minimum hours allowed
+        const maxHours = 18;
 
-                    if (this.checked) {
-                        if (totalHours + hours > maxHours) {
-                            this.checked = false;
-                            alertMessage.textContent = 'You cannot select more than 18 hours.';
-                            alertBox.style.display = 'block';
-                            overlay.style.display = 'block';
-                            return;
-                        }
-                        totalHours += hours;
-                    } else {
-                        totalHours -= hours;
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                const hours = parseInt(this.closest('.service-item').querySelector('.subject-hours').value);
+
+                if (this.checked) {
+                    if (totalHours + hours > maxHours) {
+                        this.checked = false;
+                        alertMessage.textContent = 'You cannot select more than 18 hours.';
+                        alertBox.style.display = 'block';
+                        overlay.style.display = 'block';
+                        return;
                     }
+                    totalHours += hours;
+                } else {
+                    totalHours -= hours;
+                }
 
-                    totalHoursContainer.textContent = totalHours;
-                });
-            });
-
-            closeAlertButton.addEventListener('click', function () {
-                alertBox.style.display = 'none';
-                overlay.style.display = 'none';
-            });
-
-            overlay.addEventListener('click', function () {
-                alertBox.style.display = 'none';
-                overlay.style.display = 'none';
+                totalHoursContainer.textContent = totalHours;
             });
         });
-    </script>
+
+        submitButton.addEventListener('click', function (event) {
+            if (totalHours < minHours) {
+                event.preventDefault();
+                alertMessage.textContent = 'You must select at least 12 hours.';
+                alertBox.style.display = 'block';
+                overlay.style.display = 'block';
+            }
+        });
+
+        closeAlertButton.addEventListener('click', function () {
+            alertBox.style.display = 'none';
+            overlay.style.display = 'none';
+        });
+
+        overlay.addEventListener('click', function () {
+            alertBox.style.display = 'none';
+            overlay.style.display = 'none';
+        });
+    });
+</script>
+
+
     
     <!-- End Filter Section -->
 

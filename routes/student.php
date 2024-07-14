@@ -42,7 +42,8 @@ Route::name('student.')->group(function () {
     Route::get('quiz',[MoveController::class,'quiz'])->name('quiz');
     Route::get('homework',[MoveController::class,'homework'])->name('homework');
     Route::get('studentinformation',[MoveController::class,'studentinformation'])->name('studentinformation');
-
+    Route::get('/subjects-results', [MoveController::class, 'showSubjects'])->name('subjects.status');
+    Route::post('/subjects/update', [MoveController::class, 'updateSubjects'])->name('subjects.updateStatus');
     
 });
 

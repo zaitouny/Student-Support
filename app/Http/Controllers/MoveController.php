@@ -243,6 +243,38 @@ class MoveController extends Controller
         
     }
 
+    public function showSubjects()
+    {
+        $studentId = Auth::guard('student')->id(); 
+        
+        $student = Student::with(['subjects' => function($query) {
+            $query->wherePivot('status', '2'); // المواد التي حالتها 2
+        }])->find($studentId);
+
+        return view('subjects', compact('student'));
+    }
+
+    public function updateSubjects(Request $request)
+    {
+        $studentId = Auth::guard('student')->id();
+        $student = Student::find($studentId);
+
+        if (!$student) {
+            return redirect()->back()->with('error', 'Student not found');
+        }
+
+        $subjects = $request->input('subjects');
+
+        foreach ($subjects as $subjectId => $data) {
+            $student->subjects()->updateExistingPivot($subjectId, [
+                'status' => $data['status'],
+                'mark' => $data['grade']
+            ]);
+        }
+
+        return redirect()->route('student.plan');
+    }
+
 
     /**
      * Display a listing of the resource.

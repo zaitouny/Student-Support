@@ -51,6 +51,7 @@ class Subject extends Model
         'term',
         'kind',
         'hours',
+        'description',
     ];
     use HasFactory;
 }

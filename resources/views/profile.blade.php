@@ -168,8 +168,11 @@
             <p><strong>Email:</strong> {{ Auth::user()->email }}</p>
             <p><strong>University ID:</strong> {{ Auth::user()->uni_id }}</p>
             <p><strong>Year:</strong> {{ Auth::user()->year }}</p>
-            <p><strong>Passed Credits:</strong> {{ Auth::user()->year }}</p>
-            <p><strong>AGPA:</strong> {{ Auth::user()->year }} Pts</p>
+            <p><strong>Passed Credits:</strong> {{ Auth::user()->passed_credits }}</p>
+            <p><strong>AGPA:</strong> {{ Auth::user()->agpa }} Pts</p>
+            @if (Auth::user()->agpa < 2)
+                <p style="color: red;"><strong>Warning:</strong> You are on academic probation.</p>
+            @endif
         </div>
         <button class="btn" id="edit-profile-btn" style="background-color: #79b7e7">Edit Profile</button>
 

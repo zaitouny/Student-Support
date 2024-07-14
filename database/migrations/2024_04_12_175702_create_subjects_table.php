@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('term');
             $table->string('kind');
             $table->integer('hours');
+            $table->string('description');
             $table->timestamps();
         });
     }

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('uni_id')->unique();
             $table->string('year')->default('First Year');
             $table->integer('passed_credits')->default('0');
-            $table->integer('agpa')->default('0');
+            $table->float('agpa')->default('0');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

@@ -96,32 +96,31 @@
     <div class="container-fluid p-0 mb-1">
         <div class="owl-carousel header-carousel position-relative">
             <div class="owl-carousel-item position-relative">
-                <img class="img-fluid" src="img/wpu3.jpg" alt="">
+                <img class="img-fluid" src="img/index1.jpg" alt="">
                 <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background: rgba(24, 29, 56, .7);">
                     <div class="container">
                         <div class="row justify-content-start">
                             <div class="col-sm-10 col-lg-8">
-                                <h5 class="text-primary text-uppercase mb-3 animated slideInDown">Best Online Courses</h5>
-                                <h1 class="display-3 text-white animated slideInDown">The Best Online Learning Platform</h1>
-                                <p class="fs-5 text-white mb-4 pb-2">Vero elitr justo clita lorem. Ipsum dolor at sed stet sit diam no. Kasd rebum ipsum et diam justo clita et kasd rebum sea sanctus eirmod elitr.</p>
-                                <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Read More</a>
-                                <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Join Now</a>
+                                <h5 class="text-primary text-uppercase mb-3 animated slideInDown">Best references for subjects</h5>
+                                <h1 class="display-3 text-white animated slideInDown">The best references on the Internet</h1>
+                                <p class="fs-5 text-white mb-4 pb-2">We help you have the best academic references for all your subjects.</p>
+                                {{-- <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Read More</a> --}}
+                                <a href="{{route('student.edu')}}" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Join Now</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="owl-carousel-item position-relative">
-                <img class="img-fluid" src="img/wpu2.jpg" alt="">
+                <img class="img-fluid" src="img/index2.jpg" alt="">
                 <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background: rgba(24, 29, 56, .7);">
                     <div class="container">
                         <div class="row justify-content-start">
                             <div class="col-sm-10 col-lg-8">
-                                <h5 class="text-primary text-uppercase mb-3 animated slideInDown">Best Online Courses</h5>
-                                <h1 class="display-3 text-white animated slideInDown">Get Educated Online From Your Home</h1>
-                                <p class="fs-5 text-white mb-4 pb-2">Vero elitr justo clita lorem. Ipsum dolor at sed stet sit diam no. Kasd rebum ipsum et diam justo clita et kasd rebum sea sanctus eirmod elitr.</p>
-                                <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Read More</a>
-                                <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Join Now</a>
+                                <h5 class="text-primary text-uppercase mb-3 animated slideInDown">The best tool for planning</h5>
+                                <h1 class="display-3 text-white animated slideInDown">Get a tool to plan your subjects online from the comfort of your home</h1>
+                                <p class="fs-5 text-white mb-4 pb-2">Plan for yourself and choose your path.</p>
+                                <a href="{{route('student.plan')}}" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Join Now</a>
                             </div>
                         </div>
                     </div>
@@ -140,8 +139,8 @@
                     <div class="service-item text-center pt-3">
                         <div class="p-4">
                             <i class="fa fa-3x fa-graduation-cap text-primary mb-4"></i>
-                            <h5 class="mb-3">Skilled Instructors</h5>
-                            <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
+                            <h5 class="mb-3">Knowledge Development</h5>
+                            <p>Prove yourself for the coming years</p>
                         </div>
                     </div>
                 </div>
@@ -150,7 +149,7 @@
                         <div class="p-4">
                             <i class="fa fa-3x fa-globe text-primary mb-4"></i>
                             <h5 class="mb-3">Online Classes</h5>
-                            <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
+                            <p>Strengthen yourself with the subjects you are having difficulty with</p>
                         </div>
                     </div>
                 </div>
@@ -158,8 +157,8 @@
                     <div class="service-item text-center pt-3">
                         <div class="p-4">
                             <i class="fa fa-3x fa-home text-primary mb-4"></i>
-                            <h5 class="mb-3">Home Projects</h5>
-                            <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
+                            <h5 class="mb-3">Home Planning</h5>
+                            <p>Organize your plans from home</p>
                         </div>
                     </div>
                 </div>
@@ -167,8 +166,8 @@
                     <div class="service-item text-center pt-3">
                         <div class="p-4">
                             <i class="fa fa-3x fa-book-open text-primary mb-4"></i>
-                            <h5 class="mb-3">Book Library</h5>
-                            <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
+                            <h5 class="mb-3">Reference Library</h5>
+                            <p>Access all subjects references</p>
                         </div>
                     </div>
                 </div>
@@ -178,46 +177,132 @@
     <!-- Service End -->
 
 
-    <!-- About Start -->
+        <!-- About Start -->
     <div class="container-xxl py-5">
         <div class="container">
             <div class="row g-5">
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s" style="min-height: 400px;">
                     <div class="position-relative h-100">
-                        <img class="img-fluid position-absolute w-100 h-100" src="img/wpu4.jpg" alt="" style="object-fit: cover;">
+                        <img class="img-fluid position-absolute w-100 h-100" src="img/about.jfif" alt="" style="object-fit: cover;">
                     </div>
                 </div>
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
                     <h6 class="section-title bg-white text-start text-primary pe-3">About Us</h6>
-                    <h1 class="mb-4">Welcome to eLEARNING</h1>
-                    <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
-                    <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
+                    <h1 class="mb-4">Welcome to Student Support</h1>
+                    <p class="mb-4">
+                        Student Support is a comprehensive platform designed to assist students in organizing their academic journey. We offer a wide range of study resources, tools for course selection, and pages to track exams, quizzes, and assignments.
+                    </p>
+                    <p class="mb-4">
+                        Our platform aims to simplify the academic process by providing easy access to educational materials, personalized study plans, and academic guidance. Whether you are looking for textbooks, articles, videos, or exercises, we have it all categorized by subject and level to help you excel in your studies.
+                    </p>
                     <div class="row gy-2 gx-4 mb-4">
                         <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Skilled Instructors</p>
+                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Comprehensive Study Resources</p>
                         </div>
                         <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Online Classes</p>
+                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Personalized Study Plans</p>
                         </div>
                         <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>International Certificate</p>
+                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Exam and Quiz Tracking</p>
                         </div>
-                        <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Skilled Instructors</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Online Classes</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>International Certificate</p>
-                        </div>
+                    
                     </div>
-                    <a class="btn btn-primary py-3 px-5 mt-2" href="">Read More</a>
+                    {{-- <a class="btn btn-primary py-3 px-5 mt-2" href="">Read More</a> --}}
                 </div>
             </div>
         </div>
     </div>
     <!-- About End -->
+
+
+    <!-- College staff Start -->
+    <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container">
+            <div class="text-center">
+                <h6 class="section-title bg-white text-center text-primary px-3">College staff</h6>
+                <h1 class="mb-5">Our professors</h1>
+            </div>
+            <div class="owl-carousel testimonial-carousel position-relative">
+                <div class="testimonial-item text-center">
+                    <img class="border rounded-circle p-2 mx-auto mb-3" src="images/.png" style="width: 80px; height: 80px;">
+                    <h5 class="mb-0">Dr. Ammar Zaqzouq</h5>
+                    <p>Professor Doctor</p>
+                    <div class="testimonial-text bg-light text-center p-4">
+                    <p class="mb-0">Dean of the College of Informatics Engineering.</p>
+                    </div>
+                </div>
+                <div class="testimonial-item text-center">
+                    <img class="border rounded-circle p-2 mx-auto mb-3" src="images/wasem.png" style="width: 80px; height: 80px;">
+                    <h5 class="mb-0">Dr. Waseem Ramadan</h5>
+                    <p>Doctor</p>
+                    <div class="testimonial-text bg-light text-center p-4">
+                    <p class="mb-0">Head of the Informatics Engineering Department.Doctorate in Informatics entitled “Improving video and data transmission in wireless networks” from the University of Franche-Comté in France.</p>
+                    </div>
+                </div>
+                <div class="testimonial-item text-center">
+                    <img class="border rounded-circle p-2 mx-auto mb-3" src="images/refaee.png" style="width: 80px; height: 80px;">
+                    <h5 class="mb-0">Dr. Abdul Moeen Al-Rifai</h5>
+                    <p>Doctor</p>
+                    <div class="testimonial-text bg-light text-center p-4">
+                    <p class="mb-0">Head of the Communications Engineering Department.Doctor of Philosophy degree in physical and mathematical sciences (wireless and information technologies) from the Belarusian State University of Informatics and Wireless Technology on 1/17/2008 with honors.</p>
+                    </div>
+                </div>
+                <div class="testimonial-item text-center">
+                    <img class="border rounded-circle p-2 mx-auto mb-3" src="images/tariq.png" style="width: 80px; height: 80px;">
+                    <h5 class="mb-0">Dr. Tariq Nasouri</h5>
+                    <p>Doctor</p>
+                    <div class="testimonial-text bg-light text-center p-4">
+                    <p class="mb-0">Doctorate in Automatic Control Engineering/Artificial Intelligence/ from the University of Aleppo - 2016.</p>
+                    </div>
+                </div>
+                <div class="testimonial-item text-center">
+                    <img class="border rounded-circle p-2 mx-auto mb-3" src="images/.png" style="width: 80px; height: 80px;">
+                    <h5 class="mb-0">Dr. Talal Assaf</h5>
+                    <p>Professor Doctor</p>
+                    <div class="testimonial-text bg-light text-center p-4">
+                    <p class="mb-0">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
+                    </div>
+                </div>
+
+                <div class="testimonial-item text-center">
+                    <img class="border rounded-circle p-2 mx-auto mb-3" src="images/hani.png" style="width: 80px; height: 80px;">
+                    <h5 class="mb-0">Dr. Hani Al-Khatib</h5>
+                    <p>Doctor</p>
+                    <div class="testimonial-text bg-light text-center p-4">
+                    <p class="mb-0">Deputy Dean of the College of Informatics Engineering.Doctorate degree in Computer Engineering and Networks, Department of Computer Engineering and Automation, Faculty of Mechanical and Electrical Engineering, University of Damascus 2015.</p>
+                    </div>
+                </div>
+
+                <div class="testimonial-item text-center">
+                    <img class="border rounded-circle p-2 mx-auto mb-3" src="images/ahmad.png" style="width: 80px; height: 80px;">
+                    <h5 class="mb-0">Dr. Ahmed Al-Abdo</h5>
+                    <p>Doctor</p>
+                    <div class="testimonial-text bg-light text-center p-4">
+                    <p class="mb-0">Doctorate in Electronics in the field of “Computer Microprocessors and Control Processors” from the Technical University of Ilmenau (TUI) in Germany.</p>
+                    </div>
+                </div>
+
+                <div class="testimonial-item text-center">
+                    <img class="border rounded-circle p-2 mx-auto mb-3" src="images/samar.png" style="width: 80px; height: 80px;">
+                    <h5 class="mb-0">Dr. Samar Al-Halabi</h5>
+                    <p>Doctor</p>
+                    <div class="testimonial-text bg-light text-center p-4">
+                    <p class="mb-0">Doctorate in Applied Mathematics, specializing in Informatics and Programming, Al-Baath University (2015), certificate rate 90.20%, distinction.</p>
+                    </div>
+                </div>
+
+                <div class="testimonial-item text-center">
+                    <img class="border rounded-circle p-2 mx-auto mb-3" src="images/.png" style="width: 80px; height: 80px;">
+                    <h5 class="mb-0">Dr. Mohammed Al-Mohammed</h5>
+                    <p>Doctor</p>
+                    <div class="testimonial-text bg-light text-center p-4">
+                    <p class="mb-0">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- College staff End -->
 
 
 

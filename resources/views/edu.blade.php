@@ -143,7 +143,7 @@
                     @foreach($studentSubjects as $subject)
                         <div class="col-lg-2 col-md-4 col-sm-6 ">
                             <div class="menu-item ">
-                                <div class="service-item text-center pt-3" style="width: 200px; height: 230px; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                <div class="service-item text-center pt-3" style="width: 200px; height: 250px; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                                     <div class="p-4">
                                         <i class="fa fa-3x fa-book-open text-primary mb-4"></i>
                                         <h5 class="mb-3">{{ $subject->name }}</h5>
@@ -213,7 +213,7 @@
                 @foreach($allReferences as $subject)
                     <div class="col-lg-2 col-md-4 col-sm-6 ">
                         <div class="menu-item filter-{{$subject->year}}">
-                            <div class="service-item text-center pt-3" style="width: 200px; height: 230px; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                            <div class="service-item text-center pt-3" style="width: 200px; height: 250px; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                                 <div class="p-4">
                                     <i class="fa fa-3x fa-book-open text-primary mb-4"></i>
                                     <h5 class="mb-3">{{ $subject->name }}</h5>

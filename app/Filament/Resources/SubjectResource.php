@@ -56,6 +56,8 @@ class SubjectResource extends Resource
                 Forms\Components\TextInput::make('hours')
                     ->required()
                     ->numeric(),
+                Forms\Components\Textarea::make('description')
+                    ->required(),
             ]);
     }
 
@@ -73,6 +75,8 @@ class SubjectResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('hours')
                     ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('description')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
