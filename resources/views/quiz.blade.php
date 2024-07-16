@@ -99,6 +99,8 @@
 
 
     <div class="container mt-5">
+        <!-- Theoretical Quizzes Table -->
+        <h3>Theoretical Quizzes</h3>
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -108,23 +110,56 @@
                     <th>Period</th>
                 </tr>
             </thead>
-
             <tbody>
                 @foreach($subjects as $subject)
-                    @if($subject->quizzes->isNotEmpty())
-                        <tr>
-                            <td>{{ $subject->name }}</td>
-                            @foreach($subject->quizzes as $quiz)
+                    @php
+                        $theoreticalQuizzes = $subject->quizzes->where('status', 0);
+                    @endphp
+                    @if($theoreticalQuizzes->isNotEmpty())
+                        @foreach($theoreticalQuizzes as $quiz)
+                            <tr>
+                                <td>{{ $subject->name }}</td>
                                 <td>{{ $quiz->date }}</td>
                                 <td>{{ $quiz->time }}</td>
                                 <td>{{ $quiz->period }}</td>
-                            @endforeach
-                        </tr>
+                            </tr>
+                        @endforeach
                     @endif
                 @endforeach
             </tbody>
-        </table>       
+        </table>
+    
+        <!-- Practical Quizzes Table -->
+        <h3>Practical Quizzes</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Subject Name</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Period</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($subjects as $subject)
+                    @php
+                        $practicalQuizzes = $subject->quizzes->where('status', 1);
+                    @endphp
+                    @if($practicalQuizzes->isNotEmpty())
+                        @foreach($practicalQuizzes as $quiz)
+                            <tr>
+                                <td>{{ $subject->name }}</td>
+                                <td>{{ $quiz->date }}</td>
+                                <td>{{ $quiz->time }}</td>
+                                <td>{{ $quiz->period }}</td>
+                            </tr>
+                        @endforeach
+                    @endif
+                @endforeach
+            </tbody>
+        </table>
     </div>
+    
     
     <!-- End Filter Section -->
 

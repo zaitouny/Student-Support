@@ -30,6 +30,8 @@ class ReferencesRelationManager extends RelationManager
             ->recordTitleAttribute('link')
             ->columns([
                 Tables\Columns\TextColumn::make('link'),
+                Tables\Columns\TextColumn::make('status')
+                ->formatStateUsing(fn ($state) => $state == 1 ? 'Practical section' : 'Theoretical section'),
                 Tables\Columns\TextColumn::make('kind')
                     ->searchable(),
             ])

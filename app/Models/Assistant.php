@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Assistant extends Model
 {
     use HasFactory;
+
+    protected $fillable=[
+        'kay',
+        'value',
+    ];
 }

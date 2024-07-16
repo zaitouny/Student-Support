@@ -49,6 +49,19 @@ class ProfileController extends Controller
         }
 
         $student->agpa = $gpa; 
+
+        if ($hours < 24) {
+            $student->year = 'First Year'; 
+        } elseif ($hours < 56) {
+            $student->year = 'Second Year'; 
+        } elseif ($hours < 88) {
+            $student->year = 'Third Year'; 
+        } elseif ($hours < 120) {
+            $student->year = 'Fourth Year'; 
+        } else {
+            $student->year = 'Fifth Year'; 
+        }
+
         $student->save();
 
         if (!$semesterSubjects || $semesterSubjects->subjects->isEmpty()) {

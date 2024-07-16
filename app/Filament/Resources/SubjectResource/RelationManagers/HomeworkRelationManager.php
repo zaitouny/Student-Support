@@ -9,6 +9,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Models\Subject;
 
 class HomeworkRelationManager extends RelationManager
 {
@@ -18,9 +19,26 @@ class HomeworkRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('subject_id')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Select::make('subject_id')
+                    ->label('Subject')
+                    ->options(Subject::all()->pluck('name', 'id')->toArray())
+                    ->required(),
+                Forms\Components\Select::make('status')
+                    ->label('Section')
+                    ->options([
+                        0 => 'Practical section',
+                        1 => 'Theoretical section',
+                    ])
+                    ->required(),
+                Forms\Components\DatePicker::make('last_date'),
+                Forms\Components\TextInput::make('supporting_link')
+                        ->label('Supporting Link')
+                        ->required()
+                        ->maxLength(255)
+                        ->rule('url')
+                        ->placeholder('Enter a valid URL'),
+                Forms\Components\Textarea::make('description')
+                        ->columnSpanFull(),
             ]);
     }
 
@@ -33,6 +51,10 @@ class HomeworkRelationManager extends RelationManager
                 ->label('Subject')
                 ->sortable()
                 ->searchable(),
+                Tables\Columns\TextColumn::make('status')
+                    ->label('Section')
+                    ->formatStateUsing(fn ($state) => $state == 1 ? 'Practical section' : 'Theoretical section')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('last_date')
                     ->date()
                     ->sortable(),

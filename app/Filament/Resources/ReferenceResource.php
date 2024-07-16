@@ -27,6 +27,13 @@ class ReferenceResource extends Resource
                 Forms\Components\Select::make('subject_id')
                     ->options(Subject::pluck('name', 'id')->toArray()) 
                     ->required(),
+                Forms\Components\Select::make('status')
+                    ->label('Section')
+                    ->options([
+                        0 => 'Practical section',
+                        1 => 'Theoretical section',
+                    ])
+                    ->required(),
                 Forms\Components\TextInput::make('link')
                     ->label('Link')
                     ->required()
@@ -52,6 +59,10 @@ class ReferenceResource extends Resource
                     ->label('Subject')
                     ->sortable()
                     ->searchable(),
+                Tables\Columns\TextColumn::make('status')
+                    ->label('Section')
+                    ->formatStateUsing(fn ($state) => $state == 1 ? 'Practical section' : 'Theoretical section')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('link')
                     ->label('Link')
                     ->url(fn ($record) => $record->link)

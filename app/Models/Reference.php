@@ -10,6 +10,7 @@ class Reference extends Model
     use HasFactory;
 
     protected $fillable=[
+        'status',
         'link',
         'kind',
         'subject_id',

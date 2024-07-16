@@ -27,6 +27,13 @@ class HomeworkResource extends Resource
                 Forms\Components\Select::make('subject_id')
                     ->options(Subject::pluck('name', 'id')->toArray()) 
                     ->required(),
+                Forms\Components\Select::make('status')
+                    ->label('Section')
+                    ->options([
+                        0 => 'Practical section',
+                        1 => 'Theoretical section',
+                    ])
+                    ->required(),
                 Forms\Components\DatePicker::make('last_date'),
                 Forms\Components\TextInput::make('supporting_link')
                     ->label('Supporting Link')
@@ -44,9 +51,12 @@ class HomeworkResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('subject.name')
-                ->label('Subject')
-                ->sortable()
-                ->searchable(),
+                    ->label('Subject')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('status')
+                    ->label('Section')
+                    ->formatStateUsing(fn ($state) => $state == 1 ? 'Practical section' : 'Theoretical section'),
                 Tables\Columns\TextColumn::make('last_date')
                     ->date()
                     ->sortable(),

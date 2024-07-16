@@ -164,9 +164,31 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                @foreach($studentReferences->where('subject_id', $subject->id) as $reference)
-                                                <p><a href="{{ $reference->link }}" target="_blank">Click here to go to {{ $reference->kind }}</a></p>
-                                                @endforeach
+                                                @php
+                                                    $subjectReferences = $studentReferences->where('subject_id', $subject->id);
+                                                    $theoreticalReferences = $subjectReferences->where('status', 0);
+                                                    $practicalReferences = $subjectReferences->where('status', 1);
+                                                @endphp
+                                                
+                                                <h6>Theoretical References:</h6>
+                                
+                                                @if($theoreticalReferences->count() > 0)
+                                                    @foreach($theoreticalReferences as $reference)
+                                                        <p><a href="{{ $reference->link }}" target="_blank">Click here to go to {{ $reference->kind }}</a></p>
+                                                    @endforeach
+                                                @else
+                                                    <p>There are no theoretical section references available for this subject yet.</p>
+                                                @endif
+
+                                                <h6>Practical References:</h6>
+                                                
+                                                @if($practicalReferences->count() > 0)
+                                                    @foreach($practicalReferences as $reference)
+                                                        <p><a href="{{ $reference->link }}" target="_blank">Click here to go to {{ $reference->kind }}</a></p>
+                                                    @endforeach
+                                                @else
+                                                    <p>There are no practical section references available for this subject yet.</p>
+                                                @endif
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -174,6 +196,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                
                             </div>
                         </div>
                     @endforeach
@@ -225,7 +248,7 @@
                                 </div>
                             </div>
                         
-                            <!-- Modal -->
+                           <!-- Modal -->
                             <div class="modal fade" id="referenceModal{{$subject->id}}" tabindex="-1" aria-labelledby="referenceModal{{$subject->id}}Label" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
@@ -234,9 +257,26 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            @foreach($subject->references as $reference)
-                                                <p><a href="{{ $reference->link }}" target="_blank">Click here to go to {{ $reference->kind }}</a></p>
-                                            @endforeach
+                                            @php
+                                                $theoreticalReferences = $subject->references->where('status', 0);
+                                                $practicalReferences = $subject->references->where('status', 1);
+                                            @endphp
+                                            <h6>Theoretical References:</h6>
+                                            @if($theoreticalReferences->count() > 0)
+                                                @foreach($theoreticalReferences as $reference)
+                                                    <p><a href="{{ $reference->link }}" target="_blank">Click here to go to {{ $reference->kind }}</a></p>
+                                                @endforeach
+                                            @else
+                                                <p>There are no theoretical section references available for this subject yet.</p>
+                                            @endif
+                                            <h6>Practical References:</h6>
+                                            @if($practicalReferences->count() > 0)
+                                                @foreach($practicalReferences as $reference)
+                                                    <p><a href="{{ $reference->link }}" target="_blank">Click here to go to {{ $reference->kind }}</a></p>
+                                                @endforeach
+                                            @else
+                                                <p>There are no practical section references available for this subject yet.</p>
+                                            @endif
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

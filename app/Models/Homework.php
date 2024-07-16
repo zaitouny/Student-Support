@@ -16,6 +16,7 @@ class Homework extends Model
 
     protected $fillable=[
         'last_date',
+        'status',
         'description',
         'subject_id',
         'supporting_link',

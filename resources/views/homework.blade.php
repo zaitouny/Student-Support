@@ -113,37 +113,60 @@
                                 </div>
     
                                 <!-- Modal -->
-                                <div class="modal fade" id="referenceModal{{$subject->id}}" tabindex="-1" aria-labelledby="referenceModal{{$subject->id}}Label" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="referenceModal{{$subject->id}}Label">{{ $subject->name }}</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div>
-                                                    <h6>Homeworks:</h6>
-                                                    @if($subject->homework->isNotEmpty())
-                                                        <ul>
-                                                            @foreach($subject->homework as $homework)
-                                                                <li>
-                                                                    <strong>{{ $homework->description }}</strong><br>
-                                                                    Last date: {{ $homework->last_date }}<br>
-                                                                    <a href="{{ $homework->supporting_link }}" target="_blank">Supporting Link</a>
-                                                                </li>
-                                                            @endforeach
-                                                        </ul>
-                                                    @else
-                                                        <span>No homeworks</span>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+<div class="modal fade" id="referenceModal{{$subject->id}}" tabindex="-1" aria-labelledby="referenceModal{{$subject->id}}Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="referenceModal{{$subject->id}}Label">{{ $subject->name }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @php
+                    $theoreticalHomeworks = $subject->homework->where('status', 0);
+                    $practicalHomeworks = $subject->homework->where('status', 1);
+                @endphp
+
+                <div>
+                    <h6>Theoretical Homeworks:</h6>
+                    @if($theoreticalHomeworks->isNotEmpty())
+                        <ul>
+                            @foreach($theoreticalHomeworks as $homework)
+                                <li>
+                                    <strong>{{ $homework->description }}</strong><br>
+                                    Last date: {{ $homework->last_date }}<br>
+                                    <a href="{{ $homework->supporting_link }}" target="_blank">Supporting Link</a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <span>No theoretical homeworks</span>
+                    @endif
+                </div>
+
+                <div>
+                    <h6>Practical Homeworks:</h6>
+                    @if($practicalHomeworks->isNotEmpty())
+                        <ul>
+                            @foreach($practicalHomeworks as $homework)
+                                <li>
+                                    <strong>{{ $homework->description }}</strong><br>
+                                    Last date: {{ $homework->last_date }}<br>
+                                    <a href="{{ $homework->supporting_link }}" target="_blank">Supporting Link</a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <span>No practical homeworks</span>
+                    @endif
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
                             </div>
                         </div>
                     @endforeach
